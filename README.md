@@ -14,4 +14,10 @@ Entered number: 49566
 
 On pressing *BACKSPACE* 5 times the first number i.e. 4 in this case remains there as it is.
 
-If you could fix the bug, ***OH WELL!*** I'll be the happiest person alive. Thanks for reading.
+**IN CONCLUSION, SO FAR THE BUGS THAT I FOUND ARE:**
+* The one above discussed.
+* cos(toRadians(90)) is not equal to 1 but equals to <i>'6.123233995736766E-17'</i>
+
+If you could fix all these the bug, ***OH WELL!*** I'll be the happiest person alive.
+
+Thanks for reading. Have a nice day!
