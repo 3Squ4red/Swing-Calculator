@@ -14,7 +14,7 @@ class Calculator implements ActionListener {
     Calculator() {
 //        The parent frame
         frame = new JFrame("Calculator");
-        frame.setSize(590, 550);
+        frame.setSize(790, 550);
         frame.setLocation(350, 100);
         frame.setLayout(null);
         frame.setResizable(false);
@@ -28,7 +28,7 @@ class Calculator implements ActionListener {
         Font font = new Font("Cooper Black", Font.PLAIN, 20);
         field.setFont(font);
         field.setHorizontalAlignment(JTextField.RIGHT);
-        field.setSize(292, 100);
+        field.setSize(395, 100);
         field.setLocation(0, 0);
         field.setActionCommand("done");
         field.addActionListener(this);
@@ -37,15 +37,15 @@ class Calculator implements ActionListener {
         JLabel equal = new JLabel("=");
         equal.setFont(new Font("Cooper Black", Font.PLAIN, 30));
         equal.setSize(100, 100);
-        equal.setLocation(296, 0);
+        equal.setLocation(397, 0);
         //Answer Screen
         ans = new JTextField();
         ans.setEditable(false);
         ans.setFont(font);
         ans.setBackground(Color.GREEN);
         ans.setHorizontalAlignment(JTextField.LEFT);
-        ans.setSize(264, 100);
-        ans.setLocation(320, 0);
+        ans.setSize(370, 100);
+        ans.setLocation(420, 0);
         // RESTRICTING THE INPUT TO NUMBERS ONLY!
 //        PlainDocument doc = (PlainDocument) field.getDocument();
 //        doc.setDocumentFilter(new MyIntFilter());
@@ -96,9 +96,9 @@ class Calculator implements ActionListener {
         divide.setSize(100, 100);
 
         plus.setLocation(350, 120);
-        minus.setLocation(485, 120);
+        minus.setLocation(460, 120);
         multiply.setLocation(350, 220);
-        divide.setLocation(485, 220);
+        divide.setLocation(460, 220);
 
         plus.addActionListener(this);
         minus.addActionListener(this);
@@ -115,7 +115,7 @@ class Calculator implements ActionListener {
         delete.addActionListener(this);
         clear.setFont(font);
         clear.setSize(100, 100);
-        clear.setLocation(485, 320);
+        clear.setLocation(460, 320);
         clear.addActionListener(this);
 
 //        PI and sqrt buttons
@@ -127,10 +127,36 @@ class Calculator implements ActionListener {
         pi.setFont(font);
         sqrt.setFont(font);
         pi.setLocation(350, 420);
-        sqrt.setLocation(485, 420);
+        sqrt.setLocation(460, 420);
 
         pi.addActionListener(this);
         sqrt.addActionListener(this);
+
+//        Scientific buttons
+        JButton sin = new JButton("sin");
+        JButton cos = new JButton("cos");
+        JButton tan = new JButton("tan");
+        JButton log = new JButton("log");
+
+        sin.setFont(font);
+        tan.setFont(font);
+        cos.setFont(font);
+        log.setFont(font);
+
+        sin.setSize(100, 100);
+        cos.setSize(100, 100);
+        tan.setSize(100, 100);
+        log.setSize(100, 100);
+
+        sin.setLocation(570, 120);
+        cos.setLocation(680, 120);
+        tan.setLocation(570, 220);
+        log.setLocation(680, 220);
+
+        sin.addActionListener(this);
+        cos.addActionListener(this);
+        tan.addActionListener(this);
+        log.addActionListener(this);
 //        Adding everything
         frame.add(field);
         frame.add(equal);
@@ -146,6 +172,10 @@ class Calculator implements ActionListener {
         frame.add(clear);
         frame.add(pi);
         frame.add(sqrt);
+        frame.add(sin);
+        frame.add(cos);
+        frame.add(tan);
+        frame.add(log);
 
         frame.setVisible(true);
     }
@@ -186,30 +216,15 @@ class Calculator implements ActionListener {
             } else if (button.getText().equals("PI")) {
                 field.setText(field.getText() + "3.1415");
             } else if (button.getText().equals("sqrt")) {
-                Object[] options = {"Use"};
-                JPanel panel = new JPanel();
-                JLabel label = new JLabel("Enter a number");
-                JTextField textField = new JTextField(10);
-                panel.add(label);
-                panel.add(textField);
-
-                // Uncomment to restrict the input to numbers only
-//                PlainDocument doc = (PlainDocument) textField.getDocument();
-//                doc.setDocumentFilter(new MyIntFilter());
-
-                int n = JOptionPane.showOptionDialog(frame,
-                        panel,
-                        "Square Root",
-                        JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[0]);
-                try {
-                    if (n == 0) field.setText(field.getText() + Math.sqrt(Double.parseDouble(textField.getText())));
-                } catch (Exception exp) {
-                    JOptionPane.showMessageDialog(frame, "Please enter valid characters", "Invalid characters", JOptionPane.ERROR_MESSAGE, null);
-                }
+                createDialog("Square Root", "Enter a number: ", "sqrt");
+            } else if (button.getText().equals("sin")) {
+                createDialog("sine", "Enter value in Degrees", "sin");
+            } else if (button.getText().equals("cos")) {
+                createDialog("cosine", "Enter value in Degrees", "cos");
+            } else if (button.getText().equals("tan")) {
+                createDialog("tangent", "Enter value in Degrees", "tan");
+            } else if (button.getText().equals("log")) {
+                createDialog("LOG to the base 10", "Enter a value", "log");
             } else {
                 if (!button.getText().equals("DEL")) field.setText(field.getText() + button.getText());
             }
@@ -231,6 +246,39 @@ class Calculator implements ActionListener {
                 JOptionPane.showMessageDialog(frame, "Check the expression and try again", "Syntax Error", JOptionPane.ERROR_MESSAGE);
                 ans.setText("");
             }
+        }
+    }
+
+    void createDialog(String title, String text, String buttonText) {
+        Object[] options = {"Use"};
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(text);
+        JTextField textField = new JTextField(10);
+        panel.add(label);
+        panel.add(textField);
+
+        // Uncomment to restrict the input to numbers only
+//                PlainDocument doc = (PlainDocument) textField.getDocument();
+//                doc.setDocumentFilter(new MyIntFilter());
+
+        int n = JOptionPane.showOptionDialog(frame,
+                panel,
+                title,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        try {
+            if (n == 0)  {
+                if (buttonText.equals("sqrt")) field.setText(field.getText() + Math.sqrt(Double.parseDouble(textField.getText())));
+                else if (buttonText.equals("sin")) field.setText(field.getText() + Math.sin(Math.toRadians(Double.parseDouble(textField.getText()))));
+                else if (buttonText.equals("cos")) field.setText(field.getText() + Math.cos(Math.toRadians(Double.parseDouble(textField.getText()))));
+                else if (buttonText.equals("tan")) field.setText(field.getText() + Math.tan(Math.toRadians(Double.parseDouble(textField.getText()))));
+                else if (buttonText.equals("log")) field.setText(field.getText() + Math.log10(Double.parseDouble(textField.getText())));
+            }
+        } catch (Exception exp) {
+            JOptionPane.showMessageDialog(frame, "Please enter valid characters", "Invalid characters", JOptionPane.ERROR_MESSAGE, null);
         }
     }
 
