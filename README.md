@@ -1,5 +1,5 @@
 # Swing-Calculator
-The best use-able calculator I've ever created. Purely built in Java using lightweight Swing components.
+Purely built in Java using lightweight Swing components.
 
 All the other calculors I found on GitHub were either not as expected or were full of bugs. So, I took up the responsibility to make one.
 If you find any bug in this calculator then either inform me about it or simply fix it and tell me about your accomplishment. I'll update it with your improvements.
